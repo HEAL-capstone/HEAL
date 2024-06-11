@@ -2,7 +2,7 @@ from flask import Flask, jsonify, render_template, request, app
 import sqlite3
 import pandas as pd
 from model import recommend_supplements
-
+import requests
 app = Flask(__name__)
 
 # 데이터베이스에서 영양제 데이터 불러오기
@@ -41,7 +41,14 @@ def recommend():
         })
         
     app.logger.info(f"JSON Response: {result}")
-
+    # 다른 서버로 추천 결과 전송
+    target_server_url = "http://localhost:8080/endpoint"  # 다른 서버의 엔드포인트 URL
+    try:
+        response = requests.post(target_server_url, json=result)
+        response.raise_for_status()  # 응답 상태 코드 확인
+        app.logger.info("Successfully sent recommendations to target server")
+    except requests.exceptions.RequestException as e:
+        app.logger.error(f"Failed to send recommendations: {e}")
     return jsonify(result)  # JSON 응답 반환
 
 if __name__ == "__main__":

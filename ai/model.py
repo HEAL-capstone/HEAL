@@ -103,7 +103,7 @@ def test_model(new_data, trained_mtx, trained_tf):  # 인자 추가
         recommendation_indices = random.sample(recommendation_indices, 3)
     return recommendation_indices
 
-sen = "눈에 좋은"
-result = recommend_supplements(sen)
-print("입력받은 문장: ", sen)
-print("추천",result)
+# sen = "눈에 좋은"
+# result = recommend_supplements(sen)
+# print("입력받은 문장: ", sen)
+# print("추천",result)
