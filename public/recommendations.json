@@ -1,0 +1,202 @@
+{
+  "supplements": [
+    {
+      "name": "Omega-3",
+      "description": "Supports heart health and cardiovascular function",
+      "image": "/omega3.jpg",
+      "benefits": [
+        "심장 건강과 심혈관 기능 지원",
+        "뇌 건강과 인지 기능 증진",
+        "체내 염증 감소 도움",
+        "눈 건강 개선 가능성",
+        "임신 중 태아 발달 지원"
+      ],
+      "ingredients": [
+        "EPA (Eicosapentaenoic Acid)",
+        "DHA (Docosahexaenoic Acid)",
+        "ALA (Alpha-linolenic Acid)"
+      ],
+      "whyChoose": "오메가-3 지방산은 우리 몸에서 자체적으로 생산할 수 없는 필수 영양소입니다. 세포막 형성, 호르몬 생산, 유전자 기능 조절 등 다양한 신체 기능에 중요한 역할을 합니다.",
+      "precautions": [
+        "고용량 섭취 시 출혈 위험이 증가할 수 있습니다.",
+        "어유 보충제로 인한 소화 불편 가능성.",
+        "생선/조개류 알레르기가 있는 경우 주의 필요.",
+        "임산부는 섭취 전 전문가와 상담."
+      ]
+    },
+    {
+      "name": "Vitamin C",
+      "image": "/vitamin_c.jpg",
+      "description": "Vitamin C is an essential nutrient with powerful antioxidant properties that supports immune function and skin health.",
+      "benefits": [
+        "면역 체계 강화",
+        "항산화 작용",
+        "피부 건강 증진",
+        "철분 흡수 촉진",
+        "상처 치유 촉진"
+      ],
+      "ingredients": [
+        "L-아스코르브산 (순수 비타민 C)",
+        "로즈힙 추출물",
+        "시트러스 바이오플라보노이드"
+      ],
+      "whyChoose": "비타민 C는 강력한 항산화제로, 면역 강화 및 피부 건강에 중요한 역할을 합니다. 또한 콜라겐 생성을 도와 피부와 혈관 건강에 기여합니다.",
+      "precautions": [
+        "고용량 섭취 시 위장 장애나 설사 가능.",
+        "신장 결석 위험이 있는 경우 주의.",
+        "철분 과다증이 있는 경우 섭취 제한 필요.",
+        "약물과 상호작용 가능성 존재."
+      ]
+    },
+    {
+      "name": "Probiotics",
+      "image": "/probiotics.jpg",
+      "description": "Probiotics are live beneficial bacteria that support gut health and enhance the immune system.",
+      "benefits": [
+        "장 건강 개선 및 소화 기능 강화",
+        "면역 체계 강화",
+        "유해균 억제 및 유익균 증식",
+        "영양소 흡수율 향상",
+        "장벽 기능 강화"
+      ],
+      "ingredients": [
+        "락토바실러스 (Lactobacillus)",
+        "비피도박테리움 (Bifidobacterium)",
+        "스트렙토코커스 (Streptococcus)",
+        "프리바이오틱스 (식이섬유)"
+      ],
+      "whyChoose": "프로바이오틱스는 장내 균형을 개선하고 면역력 강화에 도움을 주며, 소화 건강을 증진시키는 유익균입니다.",
+      "precautions": [
+        "면역력이 저하된 경우 의사와 상담 필요.",
+        "처음 섭취 시 소화 불편감 가능.",
+        "항생제와 동시 복용 시 효과 감소 가능.",
+        "임산부는 섭취 전 전문가와 상담."
+      ]
+    },
+    {
+      "name": "Calcium",
+      "image": "/calcium.jpg",
+      "description": "Calcium is a vital mineral for maintaining healthy bones, teeth, and proper muscle and nerve function.",
+      "benefits": [
+        "뼈와 치아 건강 강화",
+        "근육 기능 및 신경 전달 지원",
+        "심장 건강 유지",
+        "혈액 응고 기능 지원",
+        "골다공증 예방에 도움"
+      ],
+      "ingredients": [
+        "탄산칼슘 (Calcium Carbonate)",
+        "구연산칼슘 (Calcium Citrate)",
+        "비타민 D3 (흡수율 증진)",
+        "마그네슘 (시너지 효과)"
+      ],
+      "whyChoose": "칼슘은 뼈와 치아 건강에 필수적인 미네랄로, 골다공증 예방과 근육 기능 유지에 중요한 역할을 합니다.",
+      "precautions": [
+        "신장 결석이 있는 경우 주의 필요.",
+        "철분제와 동시 복용 시 흡수율 저하 가능.",
+        "고용량 섭취 시 소화 불편 가능.",
+        "약물과 상호작용 가능성 존재."
+      ]
+    },
+    {
+      "name": "Lutein",
+      "image": "/lutein.jpg",
+      "description": "Lutein is a carotenoid that plays a key role in maintaining eye health, especially in preventing macular degeneration.",
+      "benefits": [
+        "황반 변성 예방 및 진행 억제",
+        "블루라이트로부터 눈 보호",
+        "시력 선명도 개선",
+        "야간 시력 향상",
+        "눈의 피로도 감소"
+      ],
+      "ingredients": [
+        "루테인 (Lutein)",
+        "지아잔틴 (Zeaxanthin)",
+        "오메가-3 지방산",
+        "비타민 A, C, E 복합체"
+      ],
+      "whyChoose": "루테인은 눈 건강을 위한 필수 영양소로, 황반 변성을 예방하고 시력을 보호하는데 도움을 줍니다.",
+      "precautions": [
+        "임산부는 섭취 전 전문가와 상담.",
+        "고용량 섭취 시 피부 변색 가능.",
+        "흡연자는 주의 필요.",
+        "다른 영양제와 복용 시 전문가 상담 권장."
+      ]
+    },
+    {
+      "name": "Milk Thistle",
+      "image": "/milk_thistle.jpg",
+      "description": "Milk Thistle is a herbal supplement known for its liver-protective effects and antioxidant properties.",
+      "benefits": [
+        "간 기능 개선 및 보호",
+        "자연적 해독 작용 촉진",
+        "항산화 효과",
+        "소화 기능 개선",
+        "면역 체계 강화"
+      ],
+      "ingredients": [
+        "실리마린 (Silymarin)",
+        "밀크시슬 추출물",
+        "시리빈 (Silybin)",
+        "표준화된 플라보노이드 복합체"
+      ],
+      "whyChoose": "밀크시슬은 간 건강과 재생을 지원하며, 현대인의 간 건강 위험을 자연적으로 보호합니다.",
+      "precautions": [
+        "국화과 알레르기가 있는 경우 주의.",
+        "임산부와 수유부는 섭취 제한 필요.",
+        "호르몬 관련 질환이 있는 경우 주의.",
+        "약물과 상호작용 가능성 존재."
+      ]
+    },
+    {
+      "name": "Hyaluronic Acid",
+      "image": "/hyaluronic_acid.jpg",
+      "description": "Hyaluronic acid is a substance that helps maintain skin moisture and elasticity, and promotes joint health.",
+      "benefits": [
+        "피부 보습력 강화",
+        "주름 개선 효과",
+        "관절 건강 증진",
+        "피부 탄력 개선",
+        "상처 치유 촉진"
+      ],
+      "ingredients": [
+        "히알루론산 나트륨",
+        "저분자 히알루론산",
+        "고분자 히알루론산",
+        "비타민 C (흡수 촉진)"
+      ],
+      "whyChoose": "히알루론산은 피부 수분을 유지하고 탄력을 개선하며, 관절 건강에 기여하는 중요한 물질입니다.",
+      "precautions": [
+        "알레르기 반응 시 섭취 중단 필요.",
+        "임산부와 수유부는 섭취 전 전문가 상담.",
+        "과다 섭취 시 소화 불편 가능.",
+        "약물과 상호작용 가능성 존재."
+      ]
+    },
+    {
+      "name": "Arginine",
+      "image": "/arginine.jpg",
+      "description": "Arginine is an amino acid that supports blood circulation, exercise performance, and muscle growth.",
+      "benefits": [
+        "혈액순환 개선",
+        "운동 수행능력 향상",
+        "심혈관 건강 증진",
+        "근육 생성 촉진",
+        "면역력 강화"
+      ],
+      "ingredients": [
+        "L-아르기닌 HCL",
+        "L-시트룰린",
+        "비타민 B6",
+        "아연"
+      ],
+      "whyChoose": "L-아르기닌은 혈관 확장과 혈액순환을 촉진하며, 운동 수행 능력과 근육 생성에 도움을 줍니다.",
+      "precautions": [
+        "심장질환이 있는 경우 주의 필요.",
+        "혈압약 복용 중인 경우 주의.",
+        "임산부와 수유부는 섭취 제한 필요.",
+        "과다 섭취 시 소화 장애 가능."
+      ]
+    }
+  ]
+}
