@@ -4,12 +4,45 @@ import { useState, useEffect } from "react"
 import Input from "@/components/ui/Input"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { User } from 'lucide-react'
 
 export default function Component() {
   const [searchTerm, setSearchTerm] = useState("")
   const [recommendations, setRecommendations] = useState([])
   const [currentSupplement, setCurrentSupplement] = useState(0)
+  const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 여부 상태
   const router = useRouter()
+
+  useEffect(() => {
+    // token 쿠키 존재 여부를 확인하여 로그인 상태 설정
+    const cookies = document.cookie.split("; ");
+    console.log("All Cookies:", cookies);  // 모든 쿠키 출력
+    const tokenCookie = cookies.find(cookie => cookie.startsWith("token="));
+    
+    if (tokenCookie) {
+      setIsLoggedIn(true); // token 쿠키가 존재하면 로그인 상태로 설정
+    }
+  }, []);
+
+  const handleButtonClick = () => {
+    if (isLoggedIn) {
+      router.push("/dashboard"); // 로그인된 경우 /dashboard로 리디렉션
+    } else {
+      router.push("/login"); // 로그인되지 않은 경우 /login으로 리디렉션
+    }
+  };
+
+  const deleteCookie = (cookieName) => {
+    document.cookie = `${cookieName}=; Max-Age=-99999999; path=/;`;  // 쿠키 삭제
+  };
+  
+  
+
+  const handleLogout = () => {
+    deleteCookie("token");  // "token" 쿠키 삭제
+    setIsLoggedIn(false);  // 로그인 상태 갱신
+    router.push("/");  // 로그아웃 후 로그인 페이지로 리디렉션
+  };
 
   // JSON 파일에서 추천 영양소 데이터를 불러옴
   useEffect(() => {
@@ -57,30 +90,53 @@ export default function Component() {
   }
 
   return (
-    <div className="flex flex-col min-h-[100dvh]">
-      <header className="bg-gray-100 py-8 dark:bg-gray-800">
-        <div className="container mx-auto px-4 md:px-6 flex items-center justify-center gap-4">
-          <div className="flex items-center gap-4 mr-4">
-            <PillIcon className="h-8 w-8 text-gray-900 dark:text-gray-50" />
-            <h1 className="text-3xl font-bold tracking-tighter">Supplement Advisor</h1>
-          </div>
-          <form className="relative flex-1 max-w-3xl mx-auto" onSubmit={handleSubmit}>
-            <Input
-              type="text"
-              placeholder="Enter your symptoms..."
-              value={searchTerm}
-              onChange={handleSearch}
-              className="w-full px-6 py-3 rounded-lg"
-            />
-            <SearchIcon className="absolute right-4 top-1/2 -translate-y-1/2 h-6 w-6 text-gray-500 dark:text-gray-400" />
-          </form>
-          <Link href="/login">
-          <button className="ml-4 px-6 py-2.5 text-white bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500/50 transition-colors duration-200 font-medium shadow-sm">
+<div className="flex flex-col min-h-[100dvh]">
+  <header className="bg-gray-100 py-8 dark:bg-gray-800">
+    <div className="container mx-auto px-4 md:px-6 flex items-center justify-center gap-4">
+      <div className="flex items-center gap-4 mr-4">
+        <PillIcon className="h-8 w-8 text-gray-900 dark:text-gray-50" />
+        <h1 className="text-3xl font-bold tracking-tighter">Supplement Advisor</h1>
+      </div>
+      <form className="relative flex-1 max-w-3xl mx-auto" onSubmit={handleSubmit}>
+        <Input
+          type="text"
+          placeholder="Enter your symptoms..."
+          value={searchTerm}
+          onChange={handleSearch}
+          className="w-full px-6 py-3 rounded-lg"
+        />
+        <SearchIcon className="absolute right-4 top-1/2 -translate-y-1/2 h-6 w-6 text-gray-500 dark:text-gray-400" />
+      </form>
+
+      <div className="flex items-center gap-4">
+        {/* 로그인 여부에 따른 버튼 렌더링 */}
+        {isLoggedIn ? (
+          <>
+            {/* 대시보드 버튼을 User 아이콘 모양의 버튼으로 변경 */}
+            <button
+              onClick={handleButtonClick}
+              className="ml-4 p-3 bg-gray-800 rounded-full text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500/50 transition-colors duration-200"
+            >
+              <User size={24} className="text-white" />
+            </button>
+            <button
+              onClick={handleLogout}  // 로그아웃 버튼 클릭 시 실행될 함수
+              className="ml-4 px-4 py-2 text-black bg-transparent border border-gray-800 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-500/50 transition-colors duration-200 font-medium"
+            >
+              로그아웃
+            </button>
+          </>
+        ) : (
+          <button
+            onClick={handleButtonClick}
+            className="ml-4 px-6 py-2.5 text-white bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500/50 transition-colors duration-200 font-medium shadow-sm"
+          >
             로그인
           </button>
-          </Link>
-        </div>
-      </header>
+        )}
+      </div>
+    </div>
+  </header>
 
       {/* 5초마다 바뀌는 Omega-3 Supplement 텍스트 부분 */}
       <section className="w-full flex items-center justify-center py-12 md:py-24 lg:py-32 bg-[#f0f0f0] dark:bg-[#f8f8f0]">
