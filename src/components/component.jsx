@@ -74,6 +74,11 @@ export default function Component() {
             />
             <SearchIcon className="absolute right-4 top-1/2 -translate-y-1/2 h-6 w-6 text-gray-500 dark:text-gray-400" />
           </form>
+          <Link href="/login">
+          <button className="ml-4 px-6 py-2.5 text-white bg-gray-800 rounded-lg hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-gray-500/50 transition-colors duration-200 font-medium shadow-sm">
+            로그인
+          </button>
+          </Link>
         </div>
       </header>
 
