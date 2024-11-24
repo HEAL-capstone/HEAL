@@ -1,21 +1,22 @@
-"use client"
+"use client";
 
-import { useState, KeyboardEvent } from "react"
-import { useRouter } from "next/navigation"
-import { User, Lock, UserCircle, Calendar, Users, Pill } from "lucide-react"
+import { useState, KeyboardEvent } from "react";
+import { useRouter } from "next/navigation";
+import { User, Lock, UserCircle, Calendar, Users, Pill } from "lucide-react";
 
 export default function Register() {
-  const [step, setStep] = useState(1)
-  const [id, setId] = useState("")
-  const [password, setPassword] = useState("")
-  const [name, setName] = useState("")
-  const [birthDate, setBirthDate] = useState("")
-  const [gender, setGender] = useState("")
-  const router = useRouter()
+  const [step, setStep] = useState(1);
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [birthDate, setBirthDate] = useState("");
+  const [gender, setGender] = useState("");
+  const [error, setError] = useState("");
+  const router = useRouter();
 
   const focusNextInput = () => {
-    const inputs = ['id', 'password', 'name', 'birthDate', 'gender'];
-    const currentIndex = inputs.indexOf(document.activeElement?.id || '');
+    const inputs = ["id", "password", "name", "birthDate", "gender"];
+    const currentIndex = inputs.indexOf(document.activeElement?.id || "");
     if (currentIndex < inputs.length - 1) {
       const nextInput = document.getElementById(inputs[currentIndex + 1]);
       nextInput?.focus();
@@ -23,28 +24,40 @@ export default function Register() {
   };
 
   const handleKeyPress = (e: KeyboardEvent<HTMLInputElement | HTMLSelectElement>) => {
-    if (e.key === 'Enter') {
+    if (e.key === "Enter") {
       e.preventDefault();
       if (step < 5) {
         setStep(step + 1);
         focusNextInput();
       } else {
-        handleRegister();
+        handleNext();
       }
     }
-  }
+  };
 
-  const handleRegister = () => {
-    console.log("회원가입:", { id, password, name, birthDate, gender })
-    // Here you would typically handle the registration logic
-    router.push('/') // Redirect to home page after registration
-  }
+  const handleNext = () => {
+    if (!id || !password || !name || !birthDate || !gender) {
+      setError("모든 정보를 입력해주세요.");
+      return;
+    }
 
-  const transitionClass = "transition-all duration-500 ease-in-out max-h-0 overflow-hidden"
+    const userData = {
+      username: id,
+      password: password,
+      name: name,
+      gender: gender,
+      birth_date: birthDate,
+    };
+
+    sessionStorage.setItem("userData", JSON.stringify(userData));
+    router.push("/interests"); // 관심분야 선택 페이지로 이동
+  };
+
+  const transitionClass = "transition-all duration-500 ease-in-out max-h-0 overflow-hidden";
 
   const renderStep = (currentStep: number) => {
-    const isVisible = currentStep <= step
-    const visibilityClass = isVisible ? "max-h-20 opacity-100 mb-4" : "max-h-0 opacity-0"
+    const isVisible = currentStep <= step;
+    const visibilityClass = isVisible ? "max-h-20 opacity-100 mb-4" : "max-h-0 opacity-0";
 
     const renderContent = () => {
       switch (currentStep) {
@@ -63,7 +76,7 @@ export default function Register() {
                 placeholder="아이디"
               />
             </div>
-          )
+          );
         case 2:
           return (
             <div className="relative">
@@ -79,7 +92,7 @@ export default function Register() {
                 placeholder="비밀번호"
               />
             </div>
-          )
+          );
         case 3:
           return (
             <div className="relative">
@@ -95,7 +108,7 @@ export default function Register() {
                 placeholder="이름"
               />
             </div>
-          )
+          );
         case 4:
           return (
             <div className="relative">
@@ -115,7 +128,7 @@ export default function Register() {
                 className="w-full pl-10 pr-3 py-2 bg-white bg-opacity-20 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E8DCCA] text-white placeholder-gray-300"
               />
             </div>
-          )
+          );
         case 5:
           return (
             <div className="relative">
@@ -128,23 +141,25 @@ export default function Register() {
                 required
                 className="w-full pl-10 pr-3 py-2 bg-white bg-opacity-20 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E8DCCA] text-white [&>option]:text-black"
               >
-                <option value="" disabled>성별 선택</option>
+                <option value="" disabled>
+                  성별 선택
+                </option>
                 <option value="male">남성</option>
                 <option value="female">여성</option>
               </select>
             </div>
-          )
+          );
         default:
-          return null
+          return null;
       }
-    }
+    };
 
     return (
       <div className={`${transitionClass} ${visibilityClass}`}>
         {renderContent()}
       </div>
-    )
-  }
+    );
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-700 via-gray-800 to-[#E8DCCA]">
@@ -168,16 +183,17 @@ export default function Register() {
               {step === 5 && (
                 <button
                   type="button"
-                  onClick={() => router.push('/interests')}
+                  onClick={handleNext}
                   className="w-full bg-[#E8DCCA] text-gray-700 py-2 px-4 rounded-md hover:bg-[#D8CCBA] transition duration-300"
                 >
-                  완료
+                  다음
                 </button>
               )}
             </form>
             <p className="mt-4 text-sm text-center text-white">
-              {step < 5 ? "엔터를 눌러 다음으로 진행하세요" : "모든 정보를 입력한 후 '완료' 버튼을 클릭하세요"}
+              {step < 5 ? "엔터를 눌러 다음으로 진행하세요" : "모든 정보를 입력한 후 '다음' 버튼을 클릭하세요"}
             </p>
+            {error && <p className="mt-2 text-red-500 text-sm text-center">{error}</p>}
           </div>
         </div>
       </main>
@@ -186,5 +202,5 @@ export default function Register() {
         <p>&copy; 2024 HEAL. All rights reserved.</p>
       </footer>
     </div>
-  )
+  );
 }
