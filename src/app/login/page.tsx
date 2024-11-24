@@ -18,6 +18,7 @@ export default function Login() {
       // 로그인 API 호출
       const response = await fetch('http://localhost:8000/auth/login', {
         method: 'POST',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
         },
