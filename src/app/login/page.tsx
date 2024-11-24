@@ -2,18 +2,45 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import Link from "next/link"
 import { User, Lock, Pill } from "lucide-react"
 
 export default function Login() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const [error, setError] = useState("") // 에러 메시지를 처리하는 상태 추가
   const router = useRouter()
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     console.log("로그인:", username, password)
-    router.push('/')
+
+    try {
+      // 로그인 API 호출
+      const response = await fetch('http://localhost:6000/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      })
+
+      if (!response.ok) {
+        const data = await response.json()
+        setError(data.error || '로그인 실패')
+        return
+      }
+
+      const data = await response.json()
+
+      // JWT 토큰을 로컬 스토리지에 저장
+      localStorage.setItem('token', data.token)
+
+      // 로그인 성공 후 홈으로 리디렉션
+      router.push('/')
+    } catch (error) {
+      console.error("로그인 중 오류 발생:", error)
+      setError('로그인 중 오류가 발생했습니다.')
+    }
   }
 
   return (
@@ -33,6 +60,10 @@ export default function Login() {
               </div>
             </div>
             <h2 className="text-2xl font-bold text-center text-white mb-6">로그인</h2>
+            
+            {/* 에러 메시지 출력 */}
+            {error && <div className="text-red-500 text-center mb-4">{error}</div>}
+
             <form onSubmit={handleLogin} className="space-y-6">
               <div className="relative">
                 <User className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
