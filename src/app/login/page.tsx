@@ -48,7 +48,13 @@ export default function Login() {
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-700 via-gray-800 to-[#E8DCCA]">
       <header className="p-4">
         <div className="container mx-auto">
-          <h1 className="text-2xl font-bold text-white">HEAL</h1>
+          {/* HEAL 텍스트 클릭 시 루트 페이지로 이동 */}
+          <h1
+            onClick={() => router.push('/')}  // HEAL을 클릭하면 홈으로 이동
+            className="text-2xl font-bold text-white cursor-pointer"
+          >
+            HEAL
+          </h1>
         </div>
       </header>
       
