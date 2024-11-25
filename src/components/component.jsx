@@ -171,9 +171,9 @@ export default function Component() {
           <div className="grid gap-8 lg:grid-cols-2 lg:gap-12">
             <div>
               <h2 className="text-2xl font-bold tracking-tighter md:text-3xl">Why Choose {recommendations[currentSupplement]?.name}? </h2>
-              <p className="mt-4 text-gray-500 dark:text-gray-400">
+              <ul className="mt-4 text-gray-500 dark:text-gray-400">
               {recommendations[currentSupplement]?.whyChoose}
-              </p>
+              </ul>
             </div>
             <div>
               <h2 className="text-2xl font-bold tracking-tighter md:text-3xl">Ingredients</h2>
@@ -221,7 +221,7 @@ export default function Component() {
             </div>
             <div>
               <h2 className="text-2xl font-bold tracking-tighter md:text-3xl">Precautions!</h2>
-              <p className="mt-4 text-gray-500 dark:text-gray-400">
+              <ul className="mt-4 text-gray-500 dark:text-gray-400">
               <li>
                   {recommendations[currentSupplement]?.precautions[0]}
                 </li>
@@ -231,7 +231,7 @@ export default function Component() {
                 <li>
                   {recommendations[currentSupplement]?.precautions[2]}
                 </li>
-              </p>
+              </ul>
             </div>
           </div>
         </div>
