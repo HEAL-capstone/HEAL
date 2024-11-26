@@ -35,9 +35,98 @@ export default function Register() {
     }
   };
 
+  const validatePassword = (password: string): { isValid: boolean; message: string } => {
+    const minLength = 8;
+    const hasUpperCase = /[A-Z]/.test(password);
+    const hasLowerCase = /[a-z]/.test(password);
+    const hasNumber = /[0-9]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    if (password.length < minLength) {
+      return { isValid: false, message: `비밀번호는 최소 ${minLength}자 이상이어야 합니다.` };
+    }
+    if (!hasUpperCase) {
+      return { isValid: false, message: "비밀번호에는 대문자가 포함되어야 합니다." };
+    }
+    if (!hasLowerCase) {
+      return { isValid: false, message: "비밀번호에는 소문자가 포함되어야 합니다." };
+    }
+    if (!hasNumber) {
+      return { isValid: false, message: "비밀번호에는 숫자가 포함되어야 합니다." };
+    }
+    if (!hasSpecialChar) {
+      return { isValid: false, message: "비밀번호에는 특수문자가 포함되어야 합니다." };
+    }
+    return { isValid: true, message: "" };
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPassword = e.target.value;
+    setPassword(newPassword);
+
+    const { isValid, message } = validatePassword(newPassword);
+    if (!isValid) {
+      setError(message); // 오류 메시지 표시
+    } else {
+      setError(""); // 오류 초기화
+    }
+  };
+
+  const validateId = (id: string): { isValid: boolean; message: string } => {
+    const idPattern = /^[a-zA-Z0-9]{4,}$/;
+    if (!idPattern.test(id)) {
+      return { isValid: false, message: "아이디는 최소 4자 이상, 영문과 숫자만 포함할 수 있습니다." };
+    }
+    return { isValid: true, message: "" };
+  };
+
+  const validateName = (name: string): { isValid: boolean; message: string } => {
+    if (name.trim().length < 2) {
+      return { isValid: false, message: "이름은 2자 이상이어야 합니다." };
+    }
+    return { isValid: true, message: "" };
+  };
+
+  const validateBirthDate = (birthDate: string): { isValid: boolean; message: string } => {
+    const birthDatePattern = /^\d{4}-\d{2}-\d{2}$/;
+    if (!birthDatePattern.test(birthDate)) {
+      return { isValid: false, message: "유효한 생년월일을 입력해주세요." };
+    }
+    return { isValid: true, message: "" };
+  };
+
+  const validateGender = (gender: string): { isValid: boolean; message: string } => {
+    if (!gender) {
+      return { isValid: false, message: "성별을 선택해주세요." };
+    }
+    return { isValid: true, message: "" };
+  };
+
   const handleNext = () => {
-    if (!id || !password || !name || !birthDate || !gender) {
-      setError("모든 정보를 입력해주세요.");
+    const idValidation = validateId(id);
+    const passwordValidation = validatePassword(password);
+    const nameValidation = validateName(name);
+    const birthDateValidation = validateBirthDate(birthDate);
+    const genderValidation = validateGender(gender);
+
+    if (!idValidation.isValid) {
+      setError(idValidation.message);
+      return;
+    }
+    if (!passwordValidation.isValid) {
+      setError(passwordValidation.message);
+      return;
+    }
+    if (!nameValidation.isValid) {
+      setError(nameValidation.message);
+      return;
+    }
+    if (!birthDateValidation.isValid) {
+      setError(birthDateValidation.message);
+      return;
+    }
+    if (!genderValidation.isValid) {
+      setError(genderValidation.message);
       return;
     }
 
@@ -85,12 +174,13 @@ export default function Register() {
                 id="password"
                 type="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={handlePasswordChange}
                 onKeyPress={handleKeyPress}
                 required
                 className="w-full pl-10 pr-3 py-2 bg-white bg-opacity-20 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E8DCCA] text-white placeholder-gray-300"
                 placeholder="비밀번호"
               />
+              {error && <p className="mt-1 text-red-500 text-sm">{error}</p>}
             </div>
           );
         case 3:
