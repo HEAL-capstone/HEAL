@@ -257,17 +257,21 @@ export default function Dashboard() {
     };
 
   return (
-    <div className={`min-h-screen bg-white text-black ${notoSansKR.className}`}>
-      <header className="bg-black p-4 shadow-md">
-        <h1 className="text-2xl font-bold text-white">마이 페이지</h1>
-      </header>
+<div className="flex flex-col min-h-[100dvh]">
+<header className="bg-gray-100 py-8 dark:bg-gray-800">
+    <div className="container mx-auto px-4 md:px-6 flex items-center gap-4">
+      <div className="flex items-center gap-4">
+        <h1 className="text-2xl font-bold tracking-tighter">Supplement Advisor</h1>
+      </div>
+    </div>
+  </header>
       <main className="container mx-auto p-4">
         <div className="flex flex-col md:flex-row gap-6">
           {/* Left Side - User Info */}
           <div className="md:w-1/3 bg-white p-6 rounded-lg shadow-md flex flex-col justify-between border border-gray-200">
             <div className="space-y-6">
               <div className="flex flex-col items-center space-y-6">
-                <div className="bg-[#e6d5c0] p-8 rounded-full">
+                <div className="bg-[#f0f0f0] p-8 rounded-full">
                   <User size={80} className="text-black" />
                 </div>
                 <div className="text-center">
