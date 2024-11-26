@@ -7,6 +7,9 @@ import { User, Lock, Pill } from "lucide-react"
 export default function Login() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
+  const [captchaQuestion, setCaptchaQuestion] = useState("") // CAPTCHA 질문
+  const [captchaAnswer, setCaptchaAnswer] = useState("") // CAPTCHA 정답 입력
+  const [correctAnswer, setCorrectAnswer] = useState("") // CAPTCHA 정답
   const [error, setError] = useState("") // 에러 메시지를 처리하는 상태 추가
   const [attempts, setAttempts] = useState(0) // 로그인 시도 횟수를 추적
   const [lockTime, setLockTime] = useState<number | null>(null) // 차단 시간
@@ -37,14 +40,35 @@ export default function Login() {
     };
   }, [lockTime]);
 
+  // CAPTCHA 질문 생성
+  const generateCaptcha = () => {
+    const num1 = Math.floor(Math.random() * 10) + 1;
+    const num2 = Math.floor(Math.random() * 10) + 1;
+    setCaptchaQuestion(`${num1} + ${num2} = ?`);
+    setCorrectAnswer((num1 + num2).toString());
+  };
+
+  // 페이지 로드 시 CAPTCHA 생성
+  useEffect(() => {
+    generateCaptcha();
+  }, []);
+
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    console.log("로그인:", username, password)
+    e.preventDefault();
 
     if (lockTime !== null) {
       setError(`계정이 잠겼습니다. ${remainingTime}초 후에 다시 시도하세요.`);
       return;
     }
+
+    // CAPTCHA 검증
+    if (captchaAnswer !== correctAnswer) {
+      setError("CAPTCHA 정답이 올바르지 않습니다.");
+      generateCaptcha(); // 새로운 CAPTCHA 생성
+      return;
+    }
+
+    console.log("로그인:", username, password);
 
     try {
       // 로그인 API 호출
@@ -55,11 +79,11 @@ export default function Login() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, password }),
-      })
+      });
 
       if (!response.ok) {
-        const data = await response.json()
-        setError(data.error || '로그인 실패')
+        const data = await response.json();
+        setError(data.error || '로그인 실패');
 
         // 로그인 실패 시, 시도 횟수 증가
         setAttempts(prev => {
@@ -70,21 +94,21 @@ export default function Login() {
           }
           return newAttempts;
         });
-        return
+        return;
       }
 
-      const data = await response.json()
+      const data = await response.json();
 
       // JWT 토큰을 로컬 스토리지에 저장
-      localStorage.setItem('token', data.token)
+      localStorage.setItem('token', data.token);
 
       // 로그인 성공 후 홈으로 리디렉션
-      router.push('/')
+      router.push('/');
     } catch (error) {
-      console.error("로그인 중 오류 발생:", error)
-      setError('로그인 중 오류가 발생했습니다.')
+      console.error("로그인 중 오류 발생:", error);
+      setError('로그인 중 오류가 발생했습니다.');
     }
-  }
+  };
 
   return (
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-700 via-gray-800 to-[#E8DCCA]">
@@ -137,6 +161,17 @@ export default function Login() {
                   placeholder="비밀번호"
                 />
               </div>
+              <div>
+                <label className="text-white">{captchaQuestion}</label>
+                <input
+                  type="text"
+                  value={captchaAnswer}
+                  onChange={(e) => setCaptchaAnswer(e.target.value)}
+                  required
+                  className="w-full mt-2 px-3 py-2 bg-white bg-opacity-20 rounded-md focus:outline-none focus:ring-2 focus:ring-[#E8DCCA] text-[#E8DCCA] placeholder-[#E8DCCA]"
+                  placeholder="CAPTCHA 정답 입력"
+                />
+              </div>
               <button
                 type="submit"
                 className="w-full bg-[#E8DCCA] text-gray-700 py-2 px-4 rounded-md hover:bg-[#D8CCBA] transition duration-300"
@@ -161,5 +196,5 @@ export default function Login() {
         <p>&copy; 2024 HEAL. All rights reserved.</p>
       </footer>
     </div>
-  )
+  );
 }
