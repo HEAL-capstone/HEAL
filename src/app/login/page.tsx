@@ -53,6 +53,21 @@ export default function Login() {
     generateCaptcha();
   }, []);
 
+  // HTML 이스케이프 함수
+  const escapeHtml = (str: string) => {
+    return str.replace(/[&<>"'/]/g, (match) => {
+      const escapeChars: Record<string, string> = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;',
+        '/': '&#x2F;',
+      };
+      return escapeChars[match];
+    });
+  };
+
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -68,7 +83,7 @@ export default function Login() {
       return;
     }
 
-    console.log("로그인:", username, password);
+    console.log("로그인:", escapeHtml(username), escapeHtml(password));
 
     try {
       // 로그인 API 호출
@@ -78,7 +93,7 @@ export default function Login() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username: escapeHtml(username), password: escapeHtml(password) }), // 입력값 이스케이프
       });
 
       if (!response.ok) {
