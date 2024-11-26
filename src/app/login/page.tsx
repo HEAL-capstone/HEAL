@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { User, Lock, Pill } from "lucide-react"
 
@@ -8,11 +8,43 @@ export default function Login() {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("") // 에러 메시지를 처리하는 상태 추가
+  const [attempts, setAttempts] = useState(0) // 로그인 시도 횟수를 추적
+  const [lockTime, setLockTime] = useState<number | null>(null) // 차단 시간
+  const [remainingTime, setRemainingTime] = useState<number>(0) // 남은 차단 시간
   const router = useRouter()
+
+  // 차단 시간 계산
+  useEffect(() => {
+    let timer: NodeJS.Timeout | null = null;
+
+    if (lockTime !== null) {
+      const interval = setInterval(() => {
+        const now = Date.now();
+        const timeLeft = Math.max(0, lockTime - now);
+        setRemainingTime(Math.floor(timeLeft / 1000)); // 남은 시간 초 단위로 표시
+        if (timeLeft === 0) {
+          clearInterval(interval);
+          setLockTime(null); // 차단 해제
+          setAttempts(0); // 시도 횟수 초기화
+        }
+      }, 1000);
+
+      timer = interval;
+    }
+
+    return () => {
+      if (timer) clearInterval(timer);
+    };
+  }, [lockTime]);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     console.log("로그인:", username, password)
+
+    if (lockTime !== null) {
+      setError(`계정이 잠겼습니다. ${remainingTime}초 후에 다시 시도하세요.`);
+      return;
+    }
 
     try {
       // 로그인 API 호출
@@ -28,6 +60,16 @@ export default function Login() {
       if (!response.ok) {
         const data = await response.json()
         setError(data.error || '로그인 실패')
+
+        // 로그인 실패 시, 시도 횟수 증가
+        setAttempts(prev => {
+          const newAttempts = prev + 1;
+          if (newAttempts >= 5) {
+            // 5번 틀린 경우 30초 차단
+            setLockTime(Date.now() + 30000);
+          }
+          return newAttempts;
+        });
         return
       }
 
@@ -48,7 +90,6 @@ export default function Login() {
     <div className="flex flex-col min-h-screen bg-gradient-to-br from-gray-700 via-gray-800 to-[#E8DCCA]">
       <header className="p-4">
         <div className="container mx-auto">
-          {/* HEAL 텍스트 클릭 시 루트 페이지로 이동 */}
           <h1
             onClick={() => router.push('/')}  // HEAL을 클릭하면 홈으로 이동
             className="text-2xl font-bold text-white cursor-pointer"
